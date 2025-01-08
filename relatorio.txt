@@ -1,0 +1,16 @@
+Início do projeto 17/12
+
+o planejamento da interface do código foi feito, repositório criado
+propriedades estabelecidas (nome, descricao)
+
+26/12
+
+getters e setters do nome e descricao
+classe initializible
+2 views
+1 home tela inicial
+taskComponent -> da tarefa
+criei o controller de cada view para gerenciar
+configuração inicial do projeto (acertou debug)
+relacionamos o fxml 
+
