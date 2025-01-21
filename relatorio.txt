@@ -14,6 +14,11 @@ criei o controller de cada view para gerenciar
 configuração inicial do projeto (acertou debug)
 relacionamos o fxml 
 
-
-instalamos um pacote json no pom.xml
+20/01
+pacote json no pom.xml instalado
+taskComponentmodal criado
+pasta service com task service criado
+try/catch no home controller (copiado de codigo anterior)
+lista inicializada (pra colocar os dados das notas)
+interface do criar uma nota feita no fxml
 
