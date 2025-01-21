@@ -14,3 +14,6 @@ criei o controller de cada view para gerenciar
 configuração inicial do projeto (acertou debug)
 relacionamos o fxml 
 
+
+instalamos um pacote json no pom.xml
+

@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-
-<StackPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gerenciadortarefas.controller.HomeController">
+<StackPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gerenciadortarefas.controller.HomeController">
    <children>
-      <AnchorPane fx:id="mainContent" prefHeight="483.0" prefWidth="600.0">
+      <AnchorPane fx:id="mainContent" prefHeight="359.0" prefWidth="600.0">
          <children>
             <Label layoutX="40.0" layoutY="44.0" prefHeight="17.0" prefWidth="246.0" text="Dia 26 de Dezembro de 2024" />
-            <ScrollPane layoutX="41.0" layoutY="70.0" prefHeight="293.0" prefWidth="496.0" AnchorPane.bottomAnchor="36.666666666666686" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="70.0">
+            <ScrollPane layoutX="41.0" layoutY="70.0" prefHeight="293.0" prefWidth="496.0" style="-fx-background-color: none;" AnchorPane.bottomAnchor="36.666666666666686" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="70.0">
                <content>
-                  <VBox fx:id="taskContainer" prefHeight="292.0" prefWidth="501.0" />
+                  <VBox fx:id="taskContainer" prefHeight="291.0" prefWidth="517.0" />
                </content>
             </ScrollPane>
+            <Button fx:id="addTaskButton" layoutX="508.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleOpenTaskModal" text="Criar" />
          </children>
       </AnchorPane>
    </children>
