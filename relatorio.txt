@@ -22,3 +22,13 @@ try/catch no home controller (copiado de codigo anterior)
 lista inicializada (pra colocar os dados das notas)
 interface do criar uma nota feita no fxml
 
+21/01
+mudança da versao do pom alterada
+risco nas atividades realizadas quando clicar no check bottom
+criacao do tasks jason pra conseguir guardar as informacoes das notas
+criacao do menu no lado, junto com imagem (feito com ajuda de des.web)
+adaptacao da data no cadastro, pra aparecer de forma correta no tasks jason e na tela principal pro usuario
+edicao criada, a partir do criar notas
+salvar configurado pra quando clicar, ele retirar a segunda tela da frente
+
+
