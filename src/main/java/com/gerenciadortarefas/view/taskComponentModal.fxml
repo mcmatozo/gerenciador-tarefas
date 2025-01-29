@@ -12,9 +12,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gerenciadortarefas.controller.TaskComponentModalController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gerenciadortarefas.controller.TaskComponentModalController">
    <children>
-      <Label text="Criar Nova Tarefa">
+      <Label text="Criar Nova Tarefa" textFill="#f8f6f6">
          <font>
             <Font size="15.0" />
          </font>
@@ -22,13 +22,13 @@
             <Insets bottom="30.0" />
          </VBox.margin>
       </Label>
-      <Label text="Título da tarefa" />
+      <Label text="Título da tarefa" textFill="#f8f6f6" />
       <TextField fx:id="title">
          <VBox.margin>
             <Insets bottom="10.0" />
          </VBox.margin>
       </TextField>
-      <Label text="Descrição da tarefa" />
+      <Label text="Descrição da tarefa" textFill="#f8f6f6" />
       <TextArea fx:id="description" prefHeight="111.0" prefWidth="560.0">
          <VBox.margin>
             <Insets bottom="10.0" />
@@ -46,14 +46,14 @@
          <children>
             <DatePicker fx:id="executedAt" prefHeight="25.0" prefWidth="337.0" GridPane.rowIndex="1" />
             <DatePicker fx:id="finishedAt" prefHeight="25.0" prefWidth="337.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label prefHeight="17.0" prefWidth="339.0" text="Data de Execução" />
-            <Label prefHeight="17.0" prefWidth="339.0" text="Data de finalização" GridPane.columnIndex="1" />
+            <Label prefHeight="17.0" prefWidth="339.0" text="Data de Execução" textFill="#f8f6f6" />
+            <Label prefHeight="17.0" prefWidth="339.0" text="Data de finalização" textFill="#f8f6f6" GridPane.columnIndex="1" />
          </children>
          <VBox.margin>
             <Insets bottom="30.0" />
          </VBox.margin>
       </GridPane>
-      <Button fx:id="saveButton" mnemonicParsing="false" onAction="#createTask" text="Salvar" />
+      <Button fx:id="saveButton" mnemonicParsing="false" onAction="#createTask" style="-fx-background-color: black;" text="Salvar" textFill="#f8f6f6" />
    </children>
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

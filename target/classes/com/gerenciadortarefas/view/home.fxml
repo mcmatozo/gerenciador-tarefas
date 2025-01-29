@@ -8,20 +8,20 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gerenciadortarefas.controller.HomeController">
+<StackPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gerenciadortarefas.controller.HomeController">
    <children>
-      <AnchorPane fx:id="mainContent" prefHeight="359.0" prefWidth="600.0">
+      <AnchorPane fx:id="mainContent" prefHeight="359.0" prefWidth="600.0" style="-fx-background-color: black;">
          <children>
-            <Label layoutX="75.0" layoutY="42.0" prefHeight="17.0" prefWidth="246.0" text="Dia 26 de Dezembro de 2024" AnchorPane.leftAnchor="75.0" AnchorPane.topAnchor="42.0">
+            <Label layoutX="75.0" layoutY="42.0" prefHeight="17.0" prefWidth="246.0" text="Dia 26 de Dezembro de 2024" textFill="WHITE" AnchorPane.leftAnchor="75.0" AnchorPane.topAnchor="42.0">
                <font>
                   <Font size="15.0" />
                </font></Label>
             <ScrollPane layoutX="75.0" layoutY="83.33333333333333" prefHeight="286.0" prefWidth="495.0" style="-fx-background-color: none;" AnchorPane.bottomAnchor="31.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="83.0">
                <content>
-                  <VBox fx:id="taskContainer" prefHeight="291.0" prefWidth="517.0" />
+                  <VBox fx:id="taskContainer" prefHeight="291.0" prefWidth="517.0" style="-fx-background-color: white;" />
                </content>
             </ScrollPane>
-            <Button fx:id="addTaskButton" layoutX="528.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleOpenTaskModal" text="Criar" AnchorPane.rightAnchor="30.666666666666664" AnchorPane.topAnchor="40.0" />
+            <Button fx:id="addTaskButton" layoutX="528.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleOpenTaskModal" style="-fx-background-color: black;" text="Criar" textFill="#fffafa" AnchorPane.rightAnchor="30.666666666666664" AnchorPane.topAnchor="40.0" />
             <fx:include source="sideMenu.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>
       </AnchorPane>
