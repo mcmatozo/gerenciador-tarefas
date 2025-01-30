@@ -28,6 +28,7 @@ public class HomeController implements Initializable {
     @FXML
     private Button addTaskButton;
     private TaskService service;
+    
 
     //@FXML
     //private Label dateLabel;
@@ -59,22 +60,30 @@ public class HomeController implements Initializable {
         setTasks();// chama o metodo pra ser executado
     }
 
-    private void setTasks() {
+    void setTasks() {
+        // Ouvir as mudanças na lista de tarefas
         service.initObservable().addListener((javafx.collections.ListChangeListener<Task>) change -> {
             while (change.next()) {
                 if (change.wasAdded()) {
                     for (Task task : change.getAddedSubList()) {
-                        renderTask(task);
+                        renderTask(task); // Renderiza novas tarefas
+                    }
+                } else if (change.wasRemoved()) {
+                    // Caso alguma tarefa seja removida (você pode querer tratar esse caso)
+                    taskContainer.getChildren().clear(); // Limpar as tarefas atuais
+                    for (Task task : service.getTasks()) {
+                        renderTask(task); // Re-renderiza todas as tarefas
                     }
                 }
             }
         });
-
+    
+        // Carregar as tarefas inicialmente
         for (Task task : service.getTasks()) {
             renderTask(task);
         }
     }
-
+    
     private void renderTask(Task task) {
         try {
             FXMLLoader loader = new FXMLLoader(
@@ -88,26 +97,26 @@ public class HomeController implements Initializable {
             e.printStackTrace();
         }
     }
-
+    
     @FXML
-    public void handleOpenTaskModal(ActionEvent event) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(
-                    getClass().getResource("/com/gerenciadortarefas/view/taskComponentModal.fxml"));
-            Parent root = fxmlLoader.load();
+public void handleOpenTaskModal(ActionEvent event) {
+    try {
+        FXMLLoader fxmlLoader = new FXMLLoader(
+                getClass().getResource("/com/gerenciadortarefas/view/taskComponentModal.fxml"));
+        Parent root = fxmlLoader.load();
 
-            TaskComponentModalController controller = fxmlLoader.getController();
-            controller.setService(service);
+        TaskComponentModalController controller = fxmlLoader.getController();
+        controller.setService(service);
+        controller.setHomeController(this);  // Passa o controlador principal para o modal
 
-            Stage stage = new Stage();
-            stage.setTitle("Criar Nova Tarefa");
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setScene(new Scene(root));
-            stage.show();
+        Stage stage = new Stage();
+        stage.setTitle("Criar Nova Tarefa");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(new Scene(root));
+        stage.show();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    } catch (Exception e) {
+        e.printStackTrace();
     }
-
+}
 }

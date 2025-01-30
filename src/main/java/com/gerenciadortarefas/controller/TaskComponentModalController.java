@@ -33,10 +33,11 @@ public class TaskComponentModalController implements Initializable {
     private TextField title;
 
     private TaskService service;
+    private HomeController homeController;  // Referência para o HomeController
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        // TODO Auto-generated method stub
+        // Inicialização, se necessário
     }
 
     @FXML
@@ -47,13 +48,23 @@ public class TaskComponentModalController implements Initializable {
                 executedAt.getValue(),
                 finishedAt.getValue());
 
-        service.addTask(task);
+        service.addTask(task); // Adiciona a tarefa ao serviço
+
+        // Atualiza a tela principal
+        if (homeController != null) {
+            homeController.setTasks();  // Atualiza a lista de tarefas no HomeController
+        }
+
+        // Fecha o modal
         Stage stage = (Stage) saveButton.getScene().getWindow();
-        stage.close(); // fecha a aba quando clicar em salvar
+        stage.close();
     }
 
     public void setService(TaskService service) {
         this.service = service;
     }
 
+    public void setHomeController(HomeController homeController) {
+        this.homeController = homeController;  // Define a referência para o HomeController
+    }
 }

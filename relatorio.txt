@@ -48,3 +48,5 @@ pra cada tarefa criar uma instancia da classe task
 30/01
 conexão com banco feita!!!!!
 criar logica pra interface mostrar os dados salvos no banco
+efetuar refresh pra atualizar
+
