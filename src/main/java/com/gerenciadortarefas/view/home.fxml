@@ -12,7 +12,7 @@
    <children>
       <AnchorPane fx:id="mainContent" prefHeight="359.0" prefWidth="600.0" style="-fx-background-color: black;">
          <children>
-            <Label layoutX="75.0" layoutY="42.0" prefHeight="17.0" prefWidth="246.0" text="Dia 26 de Dezembro de 2024" textFill="WHITE" AnchorPane.leftAnchor="75.0" AnchorPane.topAnchor="42.0">
+            <Label layoutX="75.0" layoutY="40.0" text="Tarefas" textFill="WHITE">
                <font>
                   <Font size="15.0" />
                </font></Label>

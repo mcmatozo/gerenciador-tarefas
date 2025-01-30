@@ -44,3 +44,7 @@ exemplo - (SELECT * FROM tarefas ORDER BY id DESC)
 DAO = linha 19
 database
 pra cada tarefa criar uma instancia da classe task
+
+30/01
+conexão com banco feita!!!!!
+criar logica pra interface mostrar os dados salvos no banco

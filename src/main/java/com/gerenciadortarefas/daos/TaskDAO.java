@@ -33,6 +33,24 @@ public class TaskDAO {
         }
     }
 
+    //public void insertTask(Task task) {
+        //String sql = "INSERT INTO tarefas (name, description, status, executed_at, finished_at) VALUES (?, ?, ?, ?, ?)";
+
+        //try (Connection conn = DatabaseConnection.getConnection();
+         //    PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+          //      stmt.setString(1, task.getName());
+          //      stmt.setString(2, task.getDescription());
+          //      stmt.setString(3, null);
+           //     stmt.setString(4, task.getExecutedAt().toString());
+           //     stmt.setString(5, task.getFinishedAt().toString());
+          //      stmt.executeUpdate();
+
+        //} catch (SQLException e) {
+        //    e.printStackTrace();
+        //}
+    //}
+
     public void get() {
 
     }

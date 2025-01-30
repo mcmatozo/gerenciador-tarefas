@@ -2,7 +2,6 @@ package com.gerenciadortarefas.controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import com.gerenciadortarefas.model.Task;
@@ -16,7 +15,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -31,6 +29,26 @@ public class HomeController implements Initializable {
     private Button addTaskButton;
     private TaskService service;
 
+    //@FXML
+    //private Label dateLabel;
+
+    //@FXML //logica pra atualizar a data
+    //public void initialize() {
+    //    updateDateLabel();
+    //}
+
+    //private void updateDateLabel() {
+    //    LocalDate today = LocalDate.now();
+    //    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd 'de' MMMM 'de' yyyy");
+     //   String formattedDate = today.format(formatter);
+     //   dateLabel.setText("Dia " + formattedDate);
+    //}
+
+    //@FXML
+    //private void handleOpenTaskModal() {
+    //    // Lógica para abrir o modal de criação de tarefas
+//}
+    
     public HomeController() {
         service = new TaskService();
     }
