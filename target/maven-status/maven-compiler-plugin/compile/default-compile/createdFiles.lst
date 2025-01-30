@@ -1,0 +1,13 @@
+com\gerenciadortarefas\adapter\LocalDateAdapter.class
+com\gerenciadortarefas\controller\TaskComponentController.class
+com\gerenciadortarefas\service\TaskService.class
+com\gerenciadortarefas\controller\HomeController.class
+com\gerenciadortarefas\controller\TaskComponentModalEditController.class
+com\gerenciadortarefas\service\TaskService$2.class
+com\gerenciadortarefas\service\TaskService$1.class
+module-info.class
+com\gerenciadortarefas\App.class
+com\gerenciadortarefas\Launcher.class
+com\gerenciadortarefas\controller\SideMenuComponentController.class
+com\gerenciadortarefas\controller\TaskComponentModalController.class
+com\gerenciadortarefas\model\Task.class

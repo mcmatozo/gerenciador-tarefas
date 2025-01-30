@@ -7,6 +7,8 @@ public class Task {
     private String description;
     private LocalDate executedAt;
     private LocalDate finishedAt;
+    private LocalDate createdAt;
+    private LocalDate updatedAt;
     private boolean completed;
 
     public Task(String name, String description, LocalDate executedAt,
@@ -62,6 +64,14 @@ public class Task {
 
     public void setFinishedAt(LocalDate finishedAt) {
         this.finishedAt = finishedAt;
+    }
+
+    public LocalDate getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public LocalDate getCreatedAt() {
+        return createdAt;
     }
 
 }

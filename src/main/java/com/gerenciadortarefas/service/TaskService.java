@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.gerenciadortarefas.adapter.LocalDateAdapter;
 import com.gerenciadortarefas.model.Task;
+import com.gerenciadortarefas.repositories.TaskRepository;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -20,18 +21,21 @@ import javafx.collections.ObservableList;
 public class TaskService {
     // classe pra metodos que voce vai reutilizar
     private ObservableList<Task> tasks = FXCollections.observableArrayList();// inicializou lista do tipo tarefa e vazia
-
+    private TaskRepository repository;
+    
     private static final String FILE_PATH = (System.getProperty("user.dir")
             + "/src/main/java/com/gerenciadortarefas/data/tasks.json");
 
     public TaskService() {
+        this.repository = new TaskRepository();
         loadTask();// o construtor tem o mesmo nome da classe
     }
 
     public void addTask(Task task) {
         // metodo
         tasks.add(task);
-        saveTask();
+        //saveTask();
+        repository.save(task);
 
     }
 

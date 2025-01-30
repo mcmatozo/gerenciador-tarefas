@@ -3,6 +3,8 @@ module com.gerenciadortarefas {
     requires javafx.fxml;
     requires com.google.gson;
     requires javafx.graphics;
+    requires java.sql;
+
 
     opens com.gerenciadortarefas to javafx.fxml;
     opens com.gerenciadortarefas.controller to javafx.fxml;

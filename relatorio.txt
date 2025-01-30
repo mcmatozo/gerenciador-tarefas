@@ -31,4 +31,16 @@ adaptacao da data no cadastro, pra aparecer de forma correta no tasks jason e na
 edicao criada, a partir do criar notas
 salvar configurado pra quando clicar, ele retirar a segunda tela da frente
 
+29/01
+criações de banco de dados my sql necessárias
+manter histórico no menu criado com CSS
+criar uma entidade de usuario
+efetuar diagramas depois de tudo isso
 
+tentar ajustar a parte de get (quando sair e entrar de novo)
+comentar a parte do jason e fazer a logica de buscar no banco de dados
+mais facil do que fizemos no insert, dar query, select
+exemplo - (SELECT * FROM tarefas ORDER BY id DESC)
+DAO = linha 19
+database
+pra cada tarefa criar uma instancia da classe task
