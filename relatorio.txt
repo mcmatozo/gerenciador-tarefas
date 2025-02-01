@@ -56,3 +56,4 @@ criar o metodo de update task, pra editar no banco (As tarefas)
 retirar menu lateral
 redirecionar pra tela de login
 senha errada, corrigir
+as mesmas tarefas estao em qualquer login, arrumar
