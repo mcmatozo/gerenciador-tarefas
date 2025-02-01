@@ -1,9 +1,11 @@
 package com.gerenciadortarefas.repositories;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import com.gerenciadortarefas.daos.TaskDAO;
 import com.gerenciadortarefas.model.Task;
+import com.gerenciadortarefas.model.UserSession;
 
 public class TaskRepository {
 
@@ -21,14 +23,15 @@ public class TaskRepository {
     public void save(Task task) {
 
         try {
-            taskDAO.create(task);
+            int userId = UserSession.getInstance().getUser().getId();
+            taskDAO.create(task, userId);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void list() {
-
+    public List<Task> list() {
+        return taskDAO.listAll();
     }
     
 }

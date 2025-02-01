@@ -10,10 +10,12 @@ public class Task {
     private LocalDate createdAt;
     private LocalDate updatedAt;
     private boolean completed;
+    private int id;
 
-    public Task(String name, String description, LocalDate executedAt,
+    public Task(int id, String name, String description, LocalDate executedAt,
             LocalDate finishedAt, boolean completed) {
 
+        this.id = id;
         this.name = name;
         this.description = description;
         this.executedAt = executedAt;
@@ -23,7 +25,7 @@ public class Task {
 
     public Task(String name, String description, LocalDate executedAt,
             LocalDate finishedAt) {
-        this(name, description, executedAt, finishedAt, false);// construtor
+        this(0, name, description, executedAt, finishedAt, false);// construtor
     }
 
     public boolean isCompleted() {
@@ -72,6 +74,10 @@ public class Task {
 
     public LocalDate getCreatedAt() {
         return createdAt;
+    }
+
+    public int getId() {
+        return id;
     }
 
 }

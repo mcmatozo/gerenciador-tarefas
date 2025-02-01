@@ -50,3 +50,9 @@ conexão com banco feita!!!!!
 criar logica pra interface mostrar os dados salvos no banco
 efetuar refresh pra atualizar
 
+31/01
+ver por que nao ta duplicando
+criar o metodo de update task, pra editar no banco (As tarefas)
+retirar menu lateral
+redirecionar pra tela de login
+senha errada, corrigir

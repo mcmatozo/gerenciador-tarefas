@@ -7,8 +7,10 @@ import java.sql.Statement;
 public class DatabaseSetup {
     
     public static void createTables() {
-        String sql = "CREATE TABLE IF NOT EXISTS tarefas ("
+        String createTaskSql = "CREATE TABLE IF NOT EXISTS tarefas ("
                 + "id INT AUTO_INCREMENT PRIMARY KEY,"
+                + "user_id INT NOT NULL,"
+                + "FOREIGN KEY (user_id) REFERENCES usuarios(id),"
                 + "name VARCHAR(255) NOT NULL,"
                 + "description TEXT NOT NULL,"
                 + "status VARCHAR(255),"
@@ -18,10 +20,19 @@ public class DatabaseSetup {
                 + "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,"
                 + "updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"
                 + ")";
+        String createUserSql = "CREATE TABLE IF NOT EXISTS usuarios ("
+                + "id INT AUTO_INCREMENT PRIMARY KEY,"
+                + "name VARCHAR(255) NOT NULL,"
+                + "email VARCHAR(255) NOT NULL,"
+                + "password VARCHAR(255) NOT NULL,"
+                + "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,"
+                + "updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"
+                + ")";
         
         try (Connection conn = DatabaseConnection.getConnection();
              Statement stmt = conn.createStatement()) {
-            stmt.execute(sql);
+            stmt.execute(createUserSql);
+            stmt.execute(createTaskSql);
         } catch (SQLException e) {
             e.printStackTrace();
         }

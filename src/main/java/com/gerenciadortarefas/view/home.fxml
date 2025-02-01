@@ -23,6 +23,7 @@
             </ScrollPane>
             <Button fx:id="addTaskButton" layoutX="528.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleOpenTaskModal" style="-fx-background-color: black;" text="Criar" textFill="#fffafa" AnchorPane.rightAnchor="30.666666666666664" AnchorPane.topAnchor="40.0" />
             <fx:include source="sideMenu.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <Label fx:id="welcomeUserName" layoutX="75.0" layoutY="14.0" text="Bem-vindo(a) Maria" textFill="WHITE" />
          </children>
       </AnchorPane>
    </children>

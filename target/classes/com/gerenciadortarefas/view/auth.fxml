@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<StackPane fx:id="authContainer" xmlns="http://javafx.com/javafx/19" 
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.gerenciadortarefas.controller.AuthController">
+</StackPane>

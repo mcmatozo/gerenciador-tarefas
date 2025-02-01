@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.gerenciadortarefas.model.Task;
+import com.gerenciadortarefas.model.UserSession;
 import com.gerenciadortarefas.service.TaskService;
 
 import javafx.event.ActionEvent;
@@ -15,6 +16,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -28,6 +30,9 @@ public class HomeController implements Initializable {
     @FXML
     private Button addTaskButton;
     private TaskService service;
+
+    @FXML
+    private Label welcomeUserName;
     
 
     //@FXML
@@ -57,6 +62,8 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         // TODO Auto-generated method stub
+        welcomeUserName.setText("Bem-vindo, " + UserSession.getInstance().getUser().getName());
+
         setTasks();// chama o metodo pra ser executado
     }
 

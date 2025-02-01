@@ -2,7 +2,6 @@ package com.gerenciadortarefas.service;
 
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -80,21 +79,7 @@ public class TaskService {
     }
 
     private void loadTask() {
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(LocalDate.class, new LocalDateAdapter()) // Registra o TypeAdapter
-                .create();
-
-        try (FileReader reader = new FileReader(FILE_PATH)) {
-            Type listType = new TypeToken<List<Task>>() {
-            }.getType();
-            List<Task> jsonTasks = gson.fromJson(reader, listType);
-
-            if (jsonTasks != null) {
-                tasks.addAll(jsonTasks);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+       tasks.addAll(repository.list());
     }
 
 }
