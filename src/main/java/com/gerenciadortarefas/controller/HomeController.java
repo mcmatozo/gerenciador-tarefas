@@ -1,12 +1,13 @@
-package com.gerenciadortarefas.controller;
+package com.gerenciadortarefas.controller; // Define o pacote onde a classe está localizada
 
+// Importações necessárias para manipulação de arquivos, recursos e interface gráfica
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.gerenciadortarefas.model.Task;
-import com.gerenciadortarefas.model.UserSession;
-import com.gerenciadortarefas.service.TaskService;
+import com.gerenciadortarefas.model.Task; // Modelo que representa uma tarefa
+import com.gerenciadortarefas.model.UserSession; // Classe que gerencia a sessão do usuário
+import com.gerenciadortarefas.service.TaskService; // Serviço responsável por gerenciar tarefas
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,108 +23,127 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * Controlador responsável por gerenciar a tela inicial da aplicação.
+ * Exibe as tarefas do usuário e permite adicionar novas tarefas.
+ */
 public class HomeController implements Initializable {
-    @FXML
-    private StackPane rootPane;
-    @FXML
-    private VBox taskContainer;
-    @FXML
-    private Button addTaskButton;
-    private TaskService service;
 
     @FXML
-    private Label welcomeUserName;
-    
+    private StackPane rootPane; // Container principal da interface
 
-    //@FXML
-    //private Label dateLabel;
+    @FXML
+    private VBox taskContainer; // Container onde as tarefas são listadas
 
-    //@FXML //logica pra atualizar a data
-    //public void initialize() {
-    //    updateDateLabel();
-    //}
+    @FXML
+    private Button addTaskButton; // Botão para adicionar uma nova tarefa
 
-    //private void updateDateLabel() {
-    //    LocalDate today = LocalDate.now();
-    //    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd 'de' MMMM 'de' yyyy");
-     //   String formattedDate = today.format(formatter);
-     //   dateLabel.setText("Dia " + formattedDate);
-    //}
+    private TaskService service; // Serviço responsável pelo gerenciamento das tarefas
 
-    //@FXML
-    //private void handleOpenTaskModal() {
-    //    // Lógica para abrir o modal de criação de tarefas
-//}
-    
+    @FXML
+    private Label welcomeUserName; // Label que exibe o nome do usuário logado
+
+    /**
+     * Construtor da classe.
+     * Inicializa o serviço de gerenciamento de tarefas.
+     */
     public HomeController() {
         service = new TaskService();
     }
 
+    /**
+     * Método de inicialização chamado automaticamente pelo JavaFX ao carregar a tela.
+     * Exibe o nome do usuário e carrega as tarefas do usuário.
+     */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        // TODO Auto-generated method stub
+        // Define o nome do usuário logado na label de boas-vindas
         welcomeUserName.setText("Bem-vindo, " + UserSession.getInstance().getUser().getName());
 
-        setTasks();// chama o metodo pra ser executado
+        // Chama o método para carregar as tarefas do usuário
+        setTasks();
     }
 
+    /**
+     * Configura a lista de tarefas do usuário, ouvindo mudanças na lista para
+     * atualização automática da interface.
+     */
     void setTasks() {
-        // Ouvir as mudanças na lista de tarefas
+        // Adiciona um ouvinte para detectar mudanças na lista de tarefas
         service.initObservable().addListener((javafx.collections.ListChangeListener<Task>) change -> {
             while (change.next()) {
                 if (change.wasAdded()) {
+                    // Se uma nova tarefa foi adicionada, renderiza na tela
                     for (Task task : change.getAddedSubList()) {
-                        renderTask(task); // Renderiza novas tarefas
+                        renderTask(task);
                     }
                 } else if (change.wasRemoved()) {
-                    // Caso alguma tarefa seja removida (você pode querer tratar esse caso)
-                    taskContainer.getChildren().clear(); // Limpar as tarefas atuais
+                    // Se uma tarefa foi removida, recarrega toda a lista
+                    taskContainer.getChildren().clear();
                     for (Task task : service.getTasks()) {
-                        renderTask(task); // Re-renderiza todas as tarefas
+                        renderTask(task);
                     }
                 }
             }
         });
-    
-        // Carregar as tarefas inicialmente
+
+        // Carrega as tarefas ao iniciar a tela
         for (Task task : service.getTasks()) {
             renderTask(task);
         }
     }
-    
+
+    /**
+     * Renderiza uma tarefa na interface gráfica.
+     *
+     * @param task A tarefa a ser exibida na tela.
+     */
     private void renderTask(Task task) {
         try {
+            // Carrega o componente FXML responsável por exibir uma única tarefa
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/com/gerenciadortarefas/view/taskComponent.fxml"));
             Node taskNode = loader.load();
+
+            // Obtém o controlador do componente e define os dados da tarefa
             TaskComponentController controller = loader.getController();
             controller.setService(service);
             controller.setTaskData(task);
+
+            // Adiciona a tarefa ao container da interface
             taskContainer.getChildren().add(taskNode);
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // Exibe erros caso ocorra falha no carregamento do FXML
         }
     }
-    
+
+    /**
+     * Abre um modal para criação de uma nova tarefa.
+     *
+     * @param event O evento acionado pelo clique no botão de adicionar tarefa.
+     */
     @FXML
-public void handleOpenTaskModal(ActionEvent event) {
-    try {
-        FXMLLoader fxmlLoader = new FXMLLoader(
-                getClass().getResource("/com/gerenciadortarefas/view/taskComponentModal.fxml"));
-        Parent root = fxmlLoader.load();
+    public void handleOpenTaskModal(ActionEvent event) {
+        try {
+            // Carrega o modal de criação de tarefa a partir do FXML
+            FXMLLoader fxmlLoader = new FXMLLoader(
+                    getClass().getResource("/com/gerenciadortarefas/view/taskComponentModal.fxml"));
+            Parent root = fxmlLoader.load();
 
-        TaskComponentModalController controller = fxmlLoader.getController();
-        controller.setService(service);
-        controller.setHomeController(this);  // Passa o controlador principal para o modal
+            // Obtém o controlador do modal e passa o serviço e referência ao controlador principal
+            TaskComponentModalController controller = fxmlLoader.getController();
+            controller.setService(service);
+            controller.setHomeController(this); // Permite que o modal atualize a lista de tarefas
 
-        Stage stage = new Stage();
-        stage.setTitle("Criar Nova Tarefa");
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setScene(new Scene(root));
-        stage.show();
+            // Cria uma nova janela modal para adicionar a tarefa
+            Stage stage = new Stage();
+            stage.setTitle("Criar Nova Tarefa");
+            stage.initModality(Modality.APPLICATION_MODAL); // Define como modal (bloqueia a tela principal até fechar)
+            stage.setScene(new Scene(root));
+            stage.show();
 
-    } catch (Exception e) {
-        e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace(); // Exibe erro caso o modal não possa ser carregado
+        }
     }
-}
 }
