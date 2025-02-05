@@ -1,6 +1,8 @@
 package com.gerenciadortarefas.controller; // Define o pacote onde essa classe está localizada
 
 // Importações do JavaFX para manipular a interface gráfica (FXML, cenas e elementos visuais)
+import com.gerenciadortarefas.singleton.StageSingleton;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -110,10 +112,13 @@ public class AuthController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/gerenciadortarefas/view/home.fxml"));
             Parent root = fxmlLoader.load();
 
-            // Cria uma nova cena com o layout carregado
-            Scene scene = new Scene(root);
-
+        
             // Define a nova cena no Stage e exibe a janela
+        
+            Stage stage = StageSingleton.getInstance().getStage();
+
+            // Cria uma nova cena com o layout carregado
+            Scene scene = new Scene(root, 900, 500);
             stage.setScene(scene);
             stage.show();
         } catch (Exception e) {

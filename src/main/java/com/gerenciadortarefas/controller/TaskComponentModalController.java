@@ -7,6 +7,8 @@ import java.util.ResourceBundle;
 import com.gerenciadortarefas.model.Task;
 import com.gerenciadortarefas.service.TaskService;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -45,7 +47,22 @@ public class TaskComponentModalController implements Initializable {
      */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        // Método pode ser utilizado para inicializar valores ou configurar os controles, se necessário
+        // Inicialização, se necessário
+        saveButton.setDisable(true);
+        
+        // Add listener to validate the title field
+        title.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (newValue.trim().isEmpty()) {
+                    title.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+                    saveButton.setDisable(true);
+                } else {
+                    title.setStyle(""); // Reset border
+                    saveButton.setDisable(false);
+                }
+            }
+        });
     }
 
     /**
@@ -57,18 +74,18 @@ public class TaskComponentModalController implements Initializable {
     public void createTask(ActionEvent event) {
         // Cria uma nova instância de Task utilizando os dados inseridos pelo usuário
         Task task = new Task(
-                title.getText(),              // Título da tarefa
-                description.getText(),        // Descrição da tarefa
-                executedAt.getValue(),        // Data de execução
-                finishedAt.getValue()         // Data de término
+                title.getText(),
+                description.getText(),
+                executedAt.getValue(),
+                finishedAt.getValue()
         );
 
         service.addTask(task); // Adiciona a nova tarefa ao serviço que gerencia as tarefas
 
-        // Se o HomeController estiver disponível, atualiza a lista de tarefas na tela principal
-        if (homeController != null) {
-            homeController.setTasks();  // Atualiza a lista de tarefas no HomeController
-        }
+        // Atualiza a tela principal
+        // if (homeController != null) {
+        //     homeController.setTasks();  // Atualiza a lista de tarefas no HomeController
+        // }
 
         // Fecha o modal após salvar a tarefa
         Stage stage = (Stage) saveButton.getScene().getWindow();

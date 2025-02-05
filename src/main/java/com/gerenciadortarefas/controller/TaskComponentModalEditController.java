@@ -1,21 +1,23 @@
 package com.gerenciadortarefas.controller;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import com.gerenciadortarefas.model.Task;
 import com.gerenciadortarefas.service.TaskService;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-/**
- * Controlador responsável pela edição de tarefas dentro do modal de edição.
- */
-public class TaskComponentModalEditController {
+public class TaskComponentModalEditController implements Initializable {
 
     @FXML
     private TextArea description; // Campo para a descrição da tarefa
@@ -30,40 +32,54 @@ public class TaskComponentModalEditController {
     private Button saveButton; // Botão para salvar as alterações
 
     @FXML
-    private TextField title; // Campo para o título da tarefa
+    private Button removeButton;
+
+    @FXML
+    private TextField title;
 
     private TaskService service; // Serviço de gerenciamento de tarefas
     private Task task; // Tarefa que está sendo editada
     private HomeController homeController;  // Referência ao HomeController
 
-    /**
-     * Método acionado ao clicar no botão de salvar.
-     * Atualiza os dados da tarefa e salva as alterações.
-     */
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1) {
+        // Inicialização, se necessário
+        saveButton.setDisable(true);
+        
+        // Add listener to validate the title field
+        title.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (newValue.trim().isEmpty()) {
+                    title.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+                    saveButton.setDisable(true);
+                } else {
+                    title.setStyle(""); // Reset border
+                    saveButton.setDisable(false);
+                }
+            }
+        });
+    }
+
     @FXML
     public void editTask(ActionEvent event) {
-        // Verifica se o campo de título está vazio
-        if (title.getText().trim().isEmpty()) {
-            showError("O título da tarefa não pode estar vazio.");
-            return;
-        }
-
-        // Atualiza os dados da tarefa com os valores editados pelo usuário
-        task.setName(title.getText());
-        task.setDescription(description.getText());
-        task.setExecutedAt(executedAt.getValue());
-        task.setFinishedAt(finishedAt.getValue());
-
-        // Tenta salvar a tarefa no serviço
         try {
-            service.saveTask();
-
-            // Atualiza a interface na tela principal
-            if (homeController != null) {
-                homeController.setTasks(); // Atualiza a lista de tarefas no HomeController
+            // Verifica se o campo de título está vazio
+            if (title.getText().trim().isEmpty()) {
+                showError("O título da tarefa não pode estar vazio.");
+                return;
             }
 
-            // Fecha o modal após salvar as alterações
+            // Atualiza os dados da tarefa com os valores editados pelo usuário
+            task.setName(title.getText());
+            task.setDescription(description.getText());
+            task.setExecutedAt(executedAt.getValue());
+            task.setFinishedAt(finishedAt.getValue());
+
+            service.updateTask(task);
+            homeController.loadTasks();
+
+                // Fecha o modal após salvar as alterações
             closeModal();
         } catch (Exception e) {
             showError("Erro ao salvar a tarefa. Tente novamente.");
@@ -113,5 +129,15 @@ public class TaskComponentModalEditController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    @FXML
+    public void removeTask(ActionEvent event) {
+        service.removeTask(task);
+        homeController.loadTasks();
+
+        // Fecha o modal
+        Stage stage = (Stage) saveButton.getScene().getWindow();
+        stage.close();
     }
 }

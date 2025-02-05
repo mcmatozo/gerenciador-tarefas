@@ -1,18 +1,7 @@
 package com.gerenciadortarefas.service;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.lang.reflect.Type;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.gerenciadortarefas.adapter.LocalDateAdapter;
 import com.gerenciadortarefas.model.Task;
 import com.gerenciadortarefas.repositories.TaskRepository;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -63,46 +52,41 @@ public class TaskService {
         return tasks;
     }
 
-    /**
-     * Salva todas as tarefas em um arquivo JSON local.
-     * Usa a biblioteca Gson para converter as tarefas para JSON.
-     */
-    public void saveTask() {
-        // Configura o Gson com um adaptador para converter LocalDate corretamente
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
-                .create();
+    public void updateTask(Task task) {
+        repository.update(task);
+        updateTaskList(task);
+    }
 
-        List<Task> allTasks = new ArrayList<>(); // Lista para armazenar todas as tarefas
+    private void loadTask() {
+       tasks.addAll(repository.list());
+    }
 
-        // Tenta ler as tarefas existentes do arquivo JSON
-        try (var reader = new FileReader(FILE_PATH)) {
-            Type listType = new TypeToken<List<Task>>() {}.getType();
-            List<Task> existingTasks = gson.fromJson(reader, listType);
-            
-            // Se existirem tarefas no arquivo e a lista de tarefas atual estiver vazia, adiciona as tarefas lidas
-            if (existingTasks != null && tasks.isEmpty()) {
-                allTasks.addAll(existingTasks);
+    public void setCompletedTask(Task task) {
+        repository.setCompletedTask(task.getId(), task.isCompleted());
+    }
+
+    private void updateTaskList(Task updatedTask) {
+        for (int i = 0; i < tasks.size(); i++) {
+
+            if (tasks.get(i).getId() == updatedTask.getId()) {
+                tasks.set(i, updatedTask);
+                break;
             }
-        } catch (Exception e) {
-            e.printStackTrace(); // Exibe erros de leitura do arquivo
-        }
-
-        // Adiciona as tarefas atuais à lista antes de salvar
-        allTasks.addAll(tasks);
-
-        // Tenta escrever a lista de tarefas no arquivo JSON
-        try (var writer = new FileWriter(FILE_PATH)) {
-            gson.toJson(allTasks, writer); // Converte a lista de tarefas para JSON e escreve no arquivo
-        } catch (Exception e) {
-            e.printStackTrace(); // Exibe erros de escrita no arquivo
         }
     }
 
-    /**
-     * Carrega as tarefas do banco de dados e adiciona à lista observável.
-     */
-    private void loadTask() {
-       tasks.addAll(repository.list()); // Busca todas as tarefas no banco de dados e adiciona à lista
+    private void removeTaskList(Task updatedTask) {
+        for (int i = 0; i < tasks.size(); i++) {
+
+            if (tasks.get(i).getId() == updatedTask.getId()) {
+                tasks.remove(i);
+                break;
+            }
+        }
+    }
+
+    public void removeTask(Task task) {
+        repository.deleteTask(task.getId());
+        removeTaskList(task);
     }
 }

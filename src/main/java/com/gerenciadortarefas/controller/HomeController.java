@@ -86,8 +86,15 @@ public class HomeController implements Initializable {
                 }
             }
         });
+    
 
-        // Carrega as tarefas ao iniciar a tela
+        loadTasks();
+    }
+
+    public void loadTasks() {
+        taskContainer.getChildren().clear();
+
+        // Carregar as tarefas inicialmente
         for (Task task : service.getTasks()) {
             renderTask(task);
         }
@@ -109,8 +116,8 @@ public class HomeController implements Initializable {
             TaskComponentController controller = loader.getController();
             controller.setService(service);
             controller.setTaskData(task);
+            controller.setHomeController(this);
 
-            // Adiciona a tarefa ao container da interface
             taskContainer.getChildren().add(taskNode);
         } catch (IOException e) {
             e.printStackTrace(); // Exibe erros caso ocorra falha no carregamento do FXML
@@ -125,25 +132,22 @@ public class HomeController implements Initializable {
     @FXML
     public void handleOpenTaskModal(ActionEvent event) {
         try {
-            // Carrega o modal de criação de tarefa a partir do FXML
             FXMLLoader fxmlLoader = new FXMLLoader(
                     getClass().getResource("/com/gerenciadortarefas/view/taskComponentModal.fxml"));
             Parent root = fxmlLoader.load();
 
-            // Obtém o controlador do modal e passa o serviço e referência ao controlador principal
             TaskComponentModalController controller = fxmlLoader.getController();
             controller.setService(service);
-            controller.setHomeController(this); // Permite que o modal atualize a lista de tarefas
+            controller.setHomeController(this);  // Passa o controlador principal para o modal
 
-            // Cria uma nova janela modal para adicionar a tarefa
             Stage stage = new Stage();
             stage.setTitle("Criar Nova Tarefa");
-            stage.initModality(Modality.APPLICATION_MODAL); // Define como modal (bloqueia a tela principal até fechar)
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));
             stage.show();
 
         } catch (Exception e) {
-            e.printStackTrace(); // Exibe erro caso o modal não possa ser carregado
+            e.printStackTrace();
         }
     }
 }

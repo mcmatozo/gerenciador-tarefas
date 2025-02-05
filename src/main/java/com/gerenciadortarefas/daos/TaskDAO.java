@@ -30,27 +30,43 @@ public class TaskDAO {
         try {
             // Preparação da instrução SQL com placeholders para os parâmetros
             PreparedStatement statement = connection.prepareStatement(query);
-            // Atribui os valores aos parâmetros da query
-            statement.setInt(1, userId); // ID do usuário (relacionando a tarefa a um usuário específico)
-            statement.setString(2, task.getName()); // Nome da tarefa
-            statement.setString(3, task.getDescription()); // Descrição da tarefa
-            statement.setString(4, null); // Status da tarefa (no momento é "null", isso deveria ser tratado de forma adequada)
-            statement.setString(5, task.getExecutedAt().toString()); // Data de execução da tarefa
-            statement.setString(6, task.getFinishedAt().toString()); // Data de conclusão da tarefa
-            // Executa a query para inserir os dados no banco
+            statement.setInt(1, userId);
+            statement.setString(2, task.getName());
+            
+            if (task.getDescription() != null) statement.setString(3, task.getDescription()); else statement.setString(3, null);
+            
+            statement.setString(4, null);
+
+            if (task.getExecutedAt() != null) statement.setString(5, task.getExecutedAt().toString()); else statement.setString(5, null);
+            if (task.getFinishedAt() != null) statement.setString(6, task.getFinishedAt().toString()); else statement.setString(6, null);
+
             statement.executeUpdate();
         } catch (Exception e) {
             // Em caso de erro, imprime o stack trace
             e.printStackTrace();
-        } finally {
-            // Garante que a conexão será fechada após a execução
-            connection.close();
         }
     }
 
-    // Método vazio, que parece ser um ponto de partida para obter tarefas específicas
-    public void get() {
-        // Este método poderia ser implementado para buscar uma tarefa por ID ou algum outro critério
+    public void update(Task task, int userId) throws SQLException {
+        String query = "UPDATE tarefas SET name = ?, description = ?, executed_at = ?, finished_at = ? WHERE user_id = ? AND id = ?;";
+        
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            
+            statement.setString(1, task.getName());    
+        
+            if (task.getDescription() != null) statement.setString(2, task.getDescription());
+            if (task.getExecutedAt() != null) statement.setString(3, task.getExecutedAt().toString());
+            if (task.getFinishedAt() != null) statement.setString(4, task.getFinishedAt().toString());
+
+
+            statement.setInt(5, userId);
+            statement.setInt(6, task.getId());
+
+            statement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // Método para listar todas as tarefas associadas a uma data específica
@@ -86,12 +102,9 @@ public class TaskDAO {
         return tasks;
     }
 
-    // Método para listar todas as tarefas (sem filtro por data)
-    public List<Task> listAll() {
-        // Cria uma lista para armazenar as tarefas
+    public List<Task> listAll(int userId) {
         List<Task> tasks = new ArrayList<>();
-        // SQL para selecionar todas as tarefas
-        String sql = "SELECT * FROM tarefas ";
+        String sql = "SELECT * FROM tarefas WHERE user_id = " + userId + ";";
 
         try (Statement stmt = connection.createStatement();
              // Executa a query e obtém os resultados
@@ -118,5 +131,36 @@ public class TaskDAO {
         // Retorna a lista de tarefas
         return tasks;
     }
-    
+
+    public void setCompletedTask(int taskId, int userId, boolean value) throws SQLException {
+        String query = "UPDATE tarefas SET completed = ? WHERE user_id = ? AND id = ?;";
+        
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            
+            statement.setBoolean(1, value);
+
+            statement.setInt(2, userId);
+            statement.setInt(3, taskId);
+
+            statement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void delete(int taskId, int userId) throws SQLException {
+        String query = "DELETE FROM tarefas WHERE user_id = ? AND id = ?;";
+        
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            
+            statement.setInt(1, userId);
+            statement.setInt(2, taskId);
+
+            statement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

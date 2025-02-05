@@ -2,13 +2,13 @@ package com.gerenciadortarefas; // Define o pacote onde a classe está localizad
 
 import java.io.IOException; // Importa a classe IOException para tratar erros de entrada e saída
 
-import com.gerenciadortarefas.controller.AuthController; // Importa o controlador de autenticação
+import com.gerenciadortarefas.singleton.StageSingleton; // Importa o controlador de autenticação
 
-import javafx.application.Application; // Importa a classe principal do JavaFX
-import javafx.fxml.FXMLLoader; // Importa o carregador de arquivos FXML
-import javafx.scene.Parent; // Importa a classe Parent, que é a raiz da hierarquia de nós da cena
-import javafx.scene.Scene; // Importa a classe Scene, que representa a tela
-import javafx.stage.Stage; // Importa a classe Stage, que representa a janela principal
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader; // Importa a classe principal do JavaFX
+import javafx.scene.Parent; // Importa o carregador de arquivos FXML
+import javafx.scene.Scene; // Importa a classe Parent, que é a raiz da hierarquia de nós da cena
+import javafx.stage.Stage; // Importa a classe Scene, que representa a tela
 
 public class App extends Application { // Declara a classe App que herda de Application
 
@@ -22,16 +22,8 @@ public class App extends Application { // Declara a classe App que herda de Appl
         FXMLLoader loader = loadFXML("view/auth"); // Chama o método loadFXML passando o nome do arquivo sem a extensão
         Parent root = loader.load(); // Carrega o conteúdo do arquivo FXML e retorna como um nó raiz
 
-        // Obtém o controlador da tela de autenticação
-        AuthController authController = loader.getController();
         
-        // Passa a referência do Stage para o controlador, permitindo que ele manipule a janela
-        authController.setStage(stage);
-
-        // Cria a cena com o conteúdo carregado e define seu tamanho para 640x480 pixels
-        scene = new Scene(root, 640, 480);
-
-        // Configura a cena na janela principal
+        scene = new Scene(root, 900, 500); // Ajuste o tamanho conforme necessário
         stage.setScene(scene);
 
         // Define o título da janela
@@ -42,6 +34,8 @@ public class App extends Application { // Declara a classe App que herda de Appl
 
         // Exibe a janela
         stage.show();
+
+        StageSingleton.getInstance().setStage(stage);
     }
 
     // Método auxiliar para carregar arquivos FXML

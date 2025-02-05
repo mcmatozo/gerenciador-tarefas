@@ -42,13 +42,18 @@ public class AuthRegisterController {
      */
     @FXML
     public void handleRegister(ActionEvent event) {
-        // Obtém os valores digitados nos campos de nome, e-mail e senha
+        setLoading(true);
+
         String email = userEmail.getText();
         String name = userName.getText();
         String password = userPassword.getText();
 
         // Chama o serviço para registrar o novo usuário
         service.register(name, email, password);
+
+        setLoading(false);
+
+        authController.loadLogin();
     }
 
     /**
@@ -76,5 +81,17 @@ public class AuthRegisterController {
         if (authController != null) {
             authController.loadLogin();
         }
+    }
+
+    private void setLoading(boolean value) {
+        if (value) {
+            registerButton.setText("Carregando...");
+            registerButton.setDisable(true);
+
+            return;
+        }
+
+        registerButton.setText("Registrar");
+        registerButton.setDisable(false);
     }
 }

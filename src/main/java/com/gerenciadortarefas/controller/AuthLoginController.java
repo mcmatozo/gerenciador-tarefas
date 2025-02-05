@@ -40,20 +40,19 @@ public class AuthLoginController {
      */
     @FXML
     void handleLogin(ActionEvent event) {
-        try {
-            // Obtém o e-mail e a senha digitados pelo usuário
-            String email = userEmail.getText();
-            String userPassword = password.getText();
+       try {
+        setLoading(true);
 
-            // Chama o serviço de autenticação para verificar as credenciais
-            User user = service.login(email, userPassword);
+        String email = userEmail.getText();
+        String userPassword = password.getText();
 
-            // Se o login for bem-sucedido, armazena o usuário na sessão
-            UserSession.getInstance().setUser(user);
-
-            // Abre a tela principal da aplicação
-            authController.openHome();
-        } catch (RuntimeException e) {
+        User user = service.login(email, userPassword);
+        UserSession.getInstance().setUser(user);
+        
+        setLoading(false);
+        
+        authController.openHome();
+       } catch (RuntimeException e) {
             // TODO: Adicionar lógica para exibir mensagens de erro ao usuário
         }
     }
@@ -83,4 +82,17 @@ public class AuthLoginController {
             authController.loadRegister();
         }
     }
+
+    private void setLoading(boolean value) {
+        if (value) {
+            loginButton.setText("Carregando...");
+            loginButton.setDisable(true);
+
+            return;
+        }
+
+        loginButton.setText("Login");
+        loginButton.setDisable(false);
+    }
+
 }

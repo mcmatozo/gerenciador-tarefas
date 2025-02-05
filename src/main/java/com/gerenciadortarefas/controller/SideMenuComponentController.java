@@ -1,9 +1,15 @@
 package com.gerenciadortarefas.controller; // Define o pacote onde a classe está localizada
 
-// Importações do JavaFX para manipulação da interface gráfica
+import com.gerenciadortarefas.singleton.StageSingleton;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 /**
  * Controlador do componente de menu lateral (Side Menu).
@@ -23,8 +29,13 @@ public class SideMenuComponentController {
      * Método chamado automaticamente pelo JavaFX ao carregar a tela.
      */
     @FXML
+    private Button logoutButton;
+
+
+    @FXML
     public void initialize() {
-        // Pode ser usado futuramente para configurar comportamentos iniciais
+        logoutButton.setVisible(false);
+        sideMenu.setPrefWidth(50);
     }
 
     /**
@@ -34,10 +45,28 @@ public class SideMenuComponentController {
     @FXML
     public void toggleMenu() {
         if (isExpanded) {
-            sideMenu.setPrefWidth(50); // Recolhe o menu para 50 pixels de largura
+            logoutButton.setVisible(false);
+            sideMenu.setPrefWidth(50);
         } else {
-            sideMenu.setPrefWidth(250); // Expande o menu para 250 pixels de largura
+            logoutButton.setVisible(true);
+            sideMenu.setPrefWidth(250);
         }
         isExpanded = !isExpanded; // Alterna o estado do menu
+    }
+
+    @FXML
+    public void logoutAction(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/gerenciadortarefas/view/auth.fxml"));
+            Parent root = fxmlLoader.load();
+
+            Stage stage = StageSingleton.getInstance().getStage();
+            
+            Scene scene = new Scene(root, 900, 500);
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

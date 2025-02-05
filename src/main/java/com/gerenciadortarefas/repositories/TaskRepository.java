@@ -37,9 +37,36 @@ public class TaskRepository {
         }
     }
 
-    // Método para listar todas as tarefas do banco de dados
+    public void update(Task task) {
+
+        try {
+            int userId = UserSession.getInstance().getUser().getId();
+            taskDAO.update(task, userId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public List<Task> list() {
-        // Retorna a lista de todas as tarefas usando o método 'listAll' do TaskDAO
-        return taskDAO.listAll();
+        int userId = UserSession.getInstance().getUser().getId();
+        return taskDAO.listAll(userId);
+    }
+
+    public void setCompletedTask(int taskId, boolean value) {
+        try {
+            int userId = UserSession.getInstance().getUser().getId();
+            taskDAO.setCompletedTask(taskId, userId, value);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteTask(int taskId) {
+        try {
+            int userId = UserSession.getInstance().getUser().getId();
+            taskDAO.delete(taskId, userId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

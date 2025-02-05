@@ -36,9 +36,8 @@ public class TaskComponentController implements Initializable {
     private Task task; // Objeto que representa a tarefa associada a este componente
     private TaskService service; // Serviço responsável por gerenciar as tarefas
 
-    /**
-     * Método chamado automaticamente pelo JavaFX ao carregar a interface.
-     */
+    private HomeController homeController;
+
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         // Método pode ser utilizado para configurações iniciais se necessário
@@ -64,9 +63,10 @@ public class TaskComponentController implements Initializable {
         
         // Adiciona um listener para detectar mudanças no checkbox
         completedCheckbox.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            task.setCompleted(newValue); // Atualiza o status da tarefa
-            updateTaskTitleStyle(newValue); // Atualiza o estilo do título
-            service.saveTask(); // Salva as alterações da tarefa
+            task.setCompleted(newValue);
+            updateTaskTitleStyle(newValue);
+
+            service.setCompletedTask(task);
         });
 
         // Atualiza o estilo do título conforme o estado da tarefa (riscado se concluída)
@@ -107,8 +107,10 @@ public class TaskComponentController implements Initializable {
 
             // Obtém o controlador do modal e passa os dados da tarefa
             TaskComponentModalEditController controller = fxmlLoader.getController();
+            
             controller.setService(service);
             controller.setTaskData(task);
+            controller.setHomeController(homeController);
 
             // Cria e configura a nova janela do modal
             Stage stage = new Stage();
@@ -120,5 +122,9 @@ public class TaskComponentController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace(); // Exibe erros caso o modal não consiga ser aberto
         }
+    }
+
+    public void setHomeController(HomeController homeController) {
+        this.homeController = homeController;  // Define a referência para o HomeController
     }
 }
