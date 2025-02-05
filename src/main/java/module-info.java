@@ -1,12 +1,18 @@
 module com.gerenciadortarefas {
+    requires javafx.controls;
+    requires javafx.fxml;
+    requires com.google.gson;
+    requires javafx.graphics;
+    requires java.sql;
+    requires javafx.base;
+
     // Declara as dependências do módulo, especificando quais bibliotecas externas são necessárias
 
-    requires javafx.controls; // Necessário para usar componentes gráficos como botões, labels e janelas no JavaFX
-    requires javafx.fxml; // Necessário para carregar arquivos FXML e manipular a interface gráfica
-    requires com.google.gson; // Necessário para converter objetos Java em JSON e vice-versa
-    requires javafx.graphics; // Necessário para renderizar gráficos e elementos visuais no JavaFX
-    requires java.sql; // Necessário para trabalhar com bancos de dados através do JDBC
-    requires javafx.base;
+    // requires javafx.controls; // Necessário para usar componentes gráficos como botões, labels e janelas no JavaFX
+    // requires javafx.fxml; // Necessário para carregar arquivos FXML e manipular a interface gráfica
+    // requires com.google.gson; // Necessário para converter objetos Java em JSON e vice-versa
+    // requires javafx.graphics; // Necessário para renderizar gráficos e elementos visuais no JavaFX
+    // requires java.sql; // Necessário para trabalhar com bancos de dados através do JDBC
 
     // Define quais pacotes do módulo serão acessíveis a outras partes do programa
 
