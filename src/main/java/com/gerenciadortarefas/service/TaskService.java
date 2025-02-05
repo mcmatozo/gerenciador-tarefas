@@ -6,6 +6,10 @@ import com.gerenciadortarefas.repositories.TaskRepository;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+
+//um "gerente" para as tarefas no sistema. Ele é responsável por lidar com a criação, atualização e remoção de tarefas. 
+//Ele interage com um repositório (um "banco de dados") onde as tarefas ficam armazenadas e também atualiza a interface 
+//do usuário automaticamente quando uma tarefa é adicionada ou modificada.
 public class TaskService {
     
     // Lista observável para armazenar tarefas e atualizar automaticamente a interface gráfica (JavaFX)

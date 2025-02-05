@@ -3,6 +3,9 @@ package com.gerenciadortarefas.service;
 import com.gerenciadortarefas.model.User;
 import com.gerenciadortarefas.repositories.UserRepository;
 
+
+//Cadastrar um novo usuário (funcionário).
+//Verificar se o usuário (funcionário) é quem ele diz ser.
 public class AuthService {
     
     // Instância do repositório de usuários, responsável por interagir com a camada de persistência
