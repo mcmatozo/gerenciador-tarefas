@@ -1,21 +1,31 @@
 package com.gerenciadortarefas.controller;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
+import com.gerenciadortarefas.model.Locale;
 import com.gerenciadortarefas.model.Task;
+import com.gerenciadortarefas.service.LocaleService;
 import com.gerenciadortarefas.service.TaskService;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class TaskComponentModalEditController implements Initializable {
@@ -42,6 +52,12 @@ public class TaskComponentModalEditController implements Initializable {
     private Task task; // Tarefa que está sendo editada
     private HomeController homeController;  // Referência ao HomeController
 
+    @FXML
+    private Button createLocaleButton;
+
+    @FXML
+    private ComboBox<Locale> localeSelect;
+
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         // Inicialização, se necessário
@@ -60,6 +76,8 @@ public class TaskComponentModalEditController implements Initializable {
                 }
             }
         });
+
+        localeSelect.setOnShowing(event -> loadLocations());
     }
 
     @FXML
@@ -76,6 +94,7 @@ public class TaskComponentModalEditController implements Initializable {
             task.setDescription(description.getText());
             task.setExecutedAt(executedAt.getValue());
             task.setFinishedAt(finishedAt.getValue());
+            task.setLocale(localeSelect.getSelectionModel().getSelectedItem());
 
             service.updateTask(task);
             homeController.loadTasks();
@@ -88,6 +107,34 @@ public class TaskComponentModalEditController implements Initializable {
         }
     }
 
+    @FXML
+    public void onCreateLocale(ActionEvent event) {
+         
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(
+                    getClass().getResource("/com/gerenciadortarefas/view/localeComponentModal.fxml"));
+            Parent root = fxmlLoader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle("Criar Novo Local");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void loadLocations(){
+        
+        LocaleService localeService = new LocaleService();
+        List<Locale> list = localeService.list();
+        ObservableList<Locale> locations = FXCollections.observableArrayList(list);
+        localeSelect.setItems(locations);
+    }
+
     /**
      * Preenche os campos do formulário com os dados da tarefa atual.
      */
@@ -97,6 +144,9 @@ public class TaskComponentModalEditController implements Initializable {
         description.setText(task.getDescription());
         executedAt.setValue(task.getExecutedAt());
         finishedAt.setValue(task.getFinishedAt());
+        localeSelect.getSelectionModel().select(task.getLocale());
+
+        loadLocations();
     }
 
     /**

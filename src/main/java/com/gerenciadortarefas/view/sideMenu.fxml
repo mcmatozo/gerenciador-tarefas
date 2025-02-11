@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="sideMenu" prefHeight="520.0" prefWidth="207.0" spacing="100.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gerenciadortarefas.controller.SideMenuComponentController">
+<VBox fx:id="sideMenu" prefHeight="520.0" prefWidth="207.0" spacing="100.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gerenciadortarefas.controller.SideMenuComponentController">
     <Button fx:id="menuButton" onAction="#toggleMenu" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent; -fx-cursor: hand;" textFill="WHITE" underline="true">
       <graphic>
          <ImageView fitHeight="31.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
@@ -34,7 +34,9 @@
        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
      </rowConstraints>
       <children>
-         <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#logoutAction" prefHeight="49.0" prefWidth="207.0" text="Logout" />
+         <Button fx:id="localeButton" mnemonicParsing="false" onAction="#localeAction" prefHeight="49.0" prefWidth="207.0" text="Localizações" />
+         <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#logoutAction" prefHeight="49.0" prefWidth="207.0" text="Logout" GridPane.rowIndex="2" />
+         <Button fx:id="taskButton" mnemonicParsing="false" onAction="#taskAction" prefHeight="49.0" prefWidth="207.0" text="Tarefas" GridPane.rowIndex="1" />
       </children>
       <padding>
          <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />

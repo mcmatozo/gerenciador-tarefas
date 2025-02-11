@@ -31,10 +31,49 @@ public class SideMenuComponentController {
     @FXML
     private Button logoutButton;
 
+    @FXML
+    private Button localeButton;
+
+    @FXML
+    private Button taskButton;
+
+    @FXML
+    public void taskAction(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/gerenciadortarefas/view/home.fxml"));
+            Parent root = fxmlLoader.load();
+
+            Stage stage = StageSingleton.getInstance().getStage();
+            
+            Scene scene = new Scene(root, 900, 500);
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void localeAction(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/gerenciadortarefas/view/localeList.fxml"));
+            Parent root = fxmlLoader.load();
+
+            Stage stage = StageSingleton.getInstance().getStage();
+            
+            Scene scene = new Scene(root, 900, 500);
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     public void initialize() {
+        localeButton.setVisible(false);
         logoutButton.setVisible(false);
+        taskButton.setVisible(false);
         sideMenu.setPrefWidth(50);
     }
 
@@ -46,9 +85,13 @@ public class SideMenuComponentController {
     public void toggleMenu() {
         if (isExpanded) {
             logoutButton.setVisible(false);
+            localeButton.setVisible(false);
+            taskButton.setVisible(false);
             sideMenu.setPrefWidth(50);
         } else {
             logoutButton.setVisible(true);
+            localeButton.setVisible(true);
+            taskButton.setVisible(true);
             sideMenu.setPrefWidth(250);
         }
         isExpanded = !isExpanded; // Alterna o estado do menu

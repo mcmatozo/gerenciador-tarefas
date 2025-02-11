@@ -57,3 +57,10 @@ retirar menu lateral
 redirecionar pra tela de login
 senha errada, corrigir
 as mesmas tarefas estao em qualquer login, arrumar
+
+
+
+1 usuario vai ter n localizacoes
+1 localizacao depende de um usuario
+1 tarefa pode ter 1 localizacao
+1 localizacao pode ter n tarefas

@@ -12,10 +12,17 @@ public class Task {
     private LocalDate createdAt;  // Data de criação da tarefa
     private LocalDate updatedAt;  // Data da última atualização da tarefa
     private boolean completed;    // Status de conclusão da tarefa (completa ou não)
-    private int id;               // Identificador único da tarefa (ID)
+    private int id;  
+    private int localeId;
+    private Locale locale;
+                 // Identificador único da tarefa (ID)
+
+    public void setLocale(Locale locale) {
+        this.locale = locale;
+    }
 
     // Construtor para criação de tarefa com todos os parâmetros (incluindo 'id' e 'completed')
-    public Task(int id, String name, String description, LocalDate executedAt,
+    public Task(int id, Locale locale, String name, String description, LocalDate executedAt,
             LocalDate finishedAt, boolean completed) {
         this.id = id;               // Atribui o ID da tarefa
         this.name = name;           // Atribui o nome da tarefa
@@ -23,12 +30,13 @@ public class Task {
         this.executedAt = executedAt;   // Atribui a data de execução
         this.finishedAt = finishedAt;   // Atribui a data de finalização
         this.completed = completed;     // Atribui o status de completada
+        this.locale = locale;
     }
 
     // Construtor para criação de tarefa sem o 'id' (usado na criação de novas tarefas)
     public Task(String name, String description, LocalDate executedAt,
-            LocalDate finishedAt) {
-        this(0, name, description, executedAt, finishedAt, false); // Chama o outro construtor com 'id' 0 e 'completed' como falso
+            LocalDate finishedAt, Locale locale) {
+        this(0, locale, name, description, executedAt, finishedAt, false); // Chama o outro construtor com 'id' 0 e 'completed' como falso
     }
 
     // Métodos de acesso (getters) e modificação (setters) para cada atributo da classe
@@ -97,4 +105,13 @@ public class Task {
     public int getId() {
         return id;
     }
+
+    public int getLocaleId() {
+        return localeId;
+    }
+
+    public Locale getLocale() {
+        return locale;
+    }
+    
 }

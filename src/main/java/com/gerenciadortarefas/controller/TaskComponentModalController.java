@@ -2,20 +2,30 @@ package com.gerenciadortarefas.controller; // Define o pacote onde a classe est�
 
 // Importações necessárias para o JavaFX, manipulação de eventos e modelagem da tarefa
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
+import com.gerenciadortarefas.model.Locale;
 import com.gerenciadortarefas.model.Task;
+import com.gerenciadortarefas.service.LocaleService;
 import com.gerenciadortarefas.service.TaskService;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -42,6 +52,12 @@ public class TaskComponentModalController implements Initializable {
     private TaskService service; // Serviço que gerencia as tarefas
     private HomeController homeController;  // Referência para o controlador principal, HomeController
 
+
+    @FXML
+    private Button createLocaleButton;
+
+    @FXML
+    private ComboBox<Locale> localeSelect;
     /**
      * Método chamado automaticamente pelo JavaFX ao carregar a interface.
      */
@@ -63,6 +79,8 @@ public class TaskComponentModalController implements Initializable {
                 }
             }
         });
+
+        localeSelect.setOnShowing(event -> loadLocations()); // toda vez que voce clicar no select, ele vai chamar o banco
     }
 
     /**
@@ -77,7 +95,8 @@ public class TaskComponentModalController implements Initializable {
                 title.getText(),
                 description.getText(),
                 executedAt.getValue(),
-                finishedAt.getValue()
+                finishedAt.getValue(),
+                localeSelect.getSelectionModel().getSelectedItem() // Get the selected locale id
         );
 
         service.addTask(task); // Adiciona a nova tarefa ao serviço que gerencia as tarefas
@@ -106,5 +125,33 @@ public class TaskComponentModalController implements Initializable {
      */
     public void setHomeController(HomeController homeController) {
         this.homeController = homeController;  // Define a referência para o HomeController
+    }
+
+    @FXML
+    public void onCreateLocale(ActionEvent event) {
+         
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(
+                    getClass().getResource("/com/gerenciadortarefas/view/localeComponentModal.fxml"));
+            Parent root = fxmlLoader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle("Criar Novo Local");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void loadLocations(){
+        
+        LocaleService localeService = new LocaleService();
+        List<Locale> list = localeService.list();
+        ObservableList<Locale> locations = FXCollections.observableArrayList(list);
+        localeSelect.setItems(locations);
     }
 }
