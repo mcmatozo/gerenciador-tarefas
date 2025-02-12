@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,19 +32,21 @@ public class LocaleDAO {
         }
     }
 
-    public List<Locale> list() {
+    public List<Locale> list(int userId) {
         List<Locale> locales = new ArrayList<>();
         
-        String sql = "SELECT * FROM localizacoes";
-        try (Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+        String sql = "SELECT * FROM localizacoes WHERE user_id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {        
+
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
                 String location = rs.getString("location");
-                int userId = rs.getInt("user_id");
-                Locale locale = new Locale(id, userId, name, location);
+                int userIdLocale = rs.getInt("user_id");
+                Locale locale = new Locale(id, userIdLocale, name, location);
                 locales.add(locale);
                 System.out.println(locale);
             } 
@@ -54,6 +55,44 @@ public class LocaleDAO {
 
             e.printStackTrace();
             return locales;
+        }
+    }
+
+    public void delete(int localeId, int userId) {
+        String removeLocaleInTakesSql = "UPDATE tarefas SET locale_id = null WHERE locale_id = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(removeLocaleInTakesSql)) {
+            stmt.setInt(1, localeId);
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        String sql = "DELETE FROM localizacoes WHERE user_id = ? and id = ?";
+        
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            stmt.setInt(2, localeId);
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void update(int userId, int localeId, String name, String address) {
+        String sql = "UPDATE localizacoes SET name = ?, location = ? WHERE id = ? AND user_id = ?";
+        
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, name);
+            stmt.setString(2, address);
+            stmt.setInt(3, localeId);
+            stmt.setInt(4, userId);
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

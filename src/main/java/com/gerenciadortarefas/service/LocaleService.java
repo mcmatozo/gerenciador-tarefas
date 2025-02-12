@@ -14,14 +14,30 @@ public class LocaleService {
         localeRepository = new LocaleRepository();
     }
 
-    public void create(String name, String location) 
+    public Locale create(String name, String location) 
     {
         int userId = UserSession.getInstance().getUser().getId();
         Locale locale = new Locale(userId, name, location);
         localeRepository.create(locale);
+
+        return locale;
     }
 
     public List<Locale> list() {
-        return localeRepository.list();
+        int userId = UserSession.getInstance().getUser().getId();
+
+        return localeRepository.list(userId);
+    }
+
+    public void delete(int localeId) 
+    {
+        int userId = UserSession.getInstance().getUser().getId();
+        localeRepository.delete(localeId, userId);
+    }
+
+    public void edit(int localeId, String name, String address) 
+    {
+        int userId = UserSession.getInstance().getUser().getId();
+        localeRepository.update(userId, localeId, name, address);
     }
 }

@@ -1,6 +1,5 @@
 package com.gerenciadortarefas.repositories;
 
-import java.lang.reflect.Array;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -24,7 +23,15 @@ public class LocaleRepository {
         localeDAO.create(locale);
     }
 
-    public List<Locale> list() {
-        return localeDAO.list();
+    public void delete(int localeId, int userId) {
+        localeDAO.delete(localeId, userId);
+    }
+
+    public List<Locale> list(int userId) {
+        return localeDAO.list(userId);
+    }
+
+    public void update(int userId, int localeId, String name, String address) {
+        localeDAO.update(userId, localeId, name, address);
     }
 }
